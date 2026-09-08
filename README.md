@@ -22,6 +22,8 @@ Opisz agentowi oczekiwany rezultat i istotne ograniczenia zwykłym językiem. Za
 
 Szablony dokumentów są puste celowo. Małe zadanie nie wymaga wypełnienia wszystkich plików. Dodawaj osobny PRD, dokumenty domenowe lub decyzje dopiero wtedy, gdy pomagają zrozumieć produkt. Unikaj powtarzania tych samych informacji; usuń nieaktualny stan, a potrzebne szczegóły wydziel i podlinkuj, gdy dokument staje się trudny do czytania.
 
+Szczegóły aktualnych wymagań trafiają do `docs/spec/`, decyzje i ich uzasadnienia do `docs/decisions/`, a potrzebne szczegóły ukończonych planów do `docs/archive/roadmap/`. Katalogi powstają dopiero w razie potrzeby; główne dokumenty zachowują linki. Zastąpione decyzje wskazują swoich następców. Nieaktualny stan i powtórzenia można usuwać — historia zapisanych commitów pozostaje w Git.
+
 Rozmiary głównych dokumentów sprawdza `./scripts/check-context-size.sh`, również wywoływany przez `verify.sh`. Ostrzega po przekroczeniu któregokolwiek progu: `STATUS.md` — 150 linii lub 12 KiB, `ROADMAP.md` — 350 linii lub 30 KiB, `spec.md` — 500 linii lub 40 KiB. Brak opcjonalnego pliku jest pomijany; poniżej progów skrypt milczy. Ostrzeżenia nie blokują walidacji i nie zmieniają plików. Kontrola rozmiaru nie zastępuje kontroli produktu.
 
 ## Walidacja
