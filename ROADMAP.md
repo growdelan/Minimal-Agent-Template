@@ -1,35 +1,11 @@
-# Roadmapa
+# Plan
 
-Roadmapa opisuje możliwe do zweryfikowania przyrosty produktu. Dozwolone statusy: `planned`, `in_progress`, `done`, `blocked`.
+<!-- Opcjonalny dla większego zakresu. Dla każdego elementu zapisz rezultat, warunek ukończenia i potrzebne zależności. Dodaj status tylko na poziomie potrzebnym do kontynuacji. -->
 
-Milestone można oznaczyć jako `done`, gdy jego kryteria akceptacji są spełnione, adekwatna walidacja przeszła, a problemy blokujące z review zostały rozwiązane.
+## Do zrobienia
 
-## Milestone <numer>: <nazwa> (<status>)
+## W toku
 
-### Cel
+## Ukończone
 
-### Kryteria akceptacji
-
--
-
-### Zakres
-
--
-
-### Poza zakresem
-
--
-
-### Walidacja
-
--
-
-### Zależności i ryzyka
-
--
-
-> Dla nowego produktu rozważ minimalny pionowy slice jako pierwszy milestone, jeśli pozwala zweryfikować najważniejsze założenie end-to-end. Nie jest to obowiązkowe dla bibliotek, migracji, badań ani zmian infrastrukturalnych.
-
-## Ukończone milestone'y
-
-Zachowuj tutaj tylko krótką listę ukończonych elementów. Pełne szczegóły starszych milestone'ów przenoś do `docs/archive/roadmap/` i dodawaj bezpośredni link do właściwego pliku.
+<!-- Zachowuj tylko informacje przydatne do dalszej pracy. -->

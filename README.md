@@ -1,68 +1,91 @@
-# Codex Flow — lekki harness dla projektów Python
+# Minimalny szablon projektu
 
-Szablon współpracy z Codexem: trwałe zasady, planowanie z PRD, małe milestone'y, walidacja i review. Główna rozmowa implementuje wszystkie otwarte milestone’y, a następnie sprawdza cały wynik w tym samym wątku.
+Krótki zestaw zasad, miejsce na wymagania i pamięć pracy oraz jedna komenda walidacji. Domyślna konwencja dla Pythona to `uv`; dopasuj ją, jeśli projekt używa innego środowiska.
 
-## Użycie szablonu
+## Rozpoczęcie
 
-Skopiuj `.agents/`, `.codex/`, `docs/`, `prd/`, `scripts/`, `AGENTS.md`, `ROADMAP.md`, `STATUS.md` i `spec.md` do projektu. Nie nadpisuj jego istniejących ustaleń. Pliki `STATUS.md`, `ROADMAP.md` i `spec.md` pozostają pustymi szablonami do wypełnienia w docelowym projekcie. Dopasuj komendy i konwencje do technologii; domyślny profil to Python z `uv`.
+To README jest instrukcją korzystania z szablonu. Docelowy projekt ma własny README opisujący aplikację, jej uruchamianie i konfigurację.
 
-Dla nowego produktu:
+1. Utwórz osobne repozytorium projektu lub otwórz istniejące.
+2. Przenieś `AGENTS.md`, `spec.md` oraz katalog `scripts/`. Dodaj `STATUS.md` dla pracy obejmującej wiele sesji i `ROADMAP.md`, jeśli potrzebujesz większego planu. Reguły z `.gitignore` połącz z regułami projektu.
+3. Zachowaj istniejące wymagania, dokumentację i komendy projektu. Jeśli ma już odpowiedniki tych plików, połącz potrzebne ustalenia zamiast tworzyć drugie źródło tych samych informacji. Tego README nie musisz kopiować.
+4. Otwórz repozytorium projektu w agencie i opisz zamierzony rezultat. Agent może dopasować konwencje oraz skonfigurować `scripts/verify.sh` podczas przygotowania środowiska.
 
-1. `$codex-flow-create-prd` — wywiad i zapis wymagań w `prd/`.
-2. `$codex-flow-plan-from-prd` — specyfikacja i mierzalna roadmapa. Milestone 0 ustanawia uruchamialny projekt i rzeczywistą walidację.
-3. `$codex-flow-implement-milestone` — jeden wskazany milestone; albo `$codex-flow-run-roadmap` — wszystkie otwarte milestone’y bez commitów, potem review w tym samym wątku.
-4. `$codex-flow-publish` — synchronizacja dokumentacji i przygotowanie, commit lub push zgodnie z poleceniem.
+Opisz agentowi oczekiwany rezultat i istotne ograniczenia zwykłym językiem. Zakres planowania, implementacji i walidacji powinien wynikać z zadania. Nie trzeba wywoływać skilli ani przechodzić stałej sekwencji etapów.
 
-Małe, jasno określone zadanie wykonuj bez obowiązkowego PRD i milestone'u: oczekiwany wynik → zmiana → adekwatna walidacja. Review odbywa się w bieżącym wątku; niezależnego custom reviewera można zlecić osobno. Trwałe decyzje i niedomkniętą pracę zapisz w dokumentacji.
+## Dokumenty
 
-## Skille
+- `AGENTS.md` — lokalne konwencje i preferencje, których agent nie powinien zgadywać.
+- `spec.md` — aktualne wymagania oraz istotne decyzje i ich uzasadnienia.
+- `STATUS.md` — opcjonalna pamięć między sesjami: niedokończona praca, blokery, ostatnia walidacja i następny krok.
+- `ROADMAP.md` — opcjonalny plan większego zakresu, z rezultatami i warunkami ukończenia.
 
-| Skill | Zastosowanie |
-|---|---|
-| `codex-flow-resume` | Odtworzenie faktycznego stanu z checkpointu i Git bez zmian w plikach |
-| `codex-flow-create-prd` | Wywiad produktowy, jedno pytanie naraz, pierwszy lub kolejny PRD |
-| `codex-flow-plan-from-prd` | PRD → specyfikacja i małe, weryfikowalne milestone'y |
-| `codex-flow-implement-milestone` | Implementacja jednego wskazanego milestone'u i walidacja |
-| `codex-flow-review` | Review wskazanego zakresu w bieżącym wątku, bez delegowania |
-| `codex-flow-address-review` | Weryfikacja uwag i minimalne zasadne poprawki |
-| `codex-flow-run-roadmap` | Cała roadmapa → review całości → maksymalnie 3 rundy poprawek |
-| `codex-flow-compact-context` | Porządkowanie dokumentów bez utraty aktywnych ustaleń |
-| `codex-flow-publish` | Synchronizacja dokumentacji i publikacja w autoryzowanym zakresie |
+Szablony dokumentów są puste celowo. Małe zadanie nie wymaga wypełnienia wszystkich plików. Dodawaj osobny PRD, dokumenty domenowe lub decyzje dopiero wtedy, gdy pomagają zrozumieć produkt. Unikaj powtarzania tych samych informacji; usuń nieaktualny stan, a potrzebne szczegóły wydziel i podlinkuj, gdy dokument staje się trudny do czytania.
 
-## Agenci i autonomiczna praca
-
-- Główny agent implementuje, waliduje, naprawia zasadne problemy i utrzymuje stan projektu.
-- `reviewer` — niezależne review read-only, `gpt-6-astra`, reasoning `medium`. Uruchamiany wyłącznie na jawne polecenie użytkownika; `run-roadmap` nigdy go nie wywołuje.
-- `implementer` — poza `run-roadmap`: opcjonalne zamknięte zadania, gdy delegowanie daje konkretną korzyść; `gpt-6-astra`, reasoning `low`.
-- `planner` — poza `run-roadmap`: opcjonalna niezależna analiza wymagań i planu, read-only; `gpt-6-astra`, reasoning `medium`.
-
-Przebieg i warunki zatrzymania pętli definiuje [run-roadmap](.agents/skills/codex-flow-run-roadmap/SKILL.md). Aktualizuje ona `STATUS.md` i statusy roadmapy na bieżąco. Pełna redakcja specyfikacji i README może poczekać do finalizacji; wymagane artefakty produktu są realizowane wraz z milestone'em.
-
-Najpierw powstają implementacje wszystkich otwartych milestone’ów, a po walidacji `codex-flow-review` ocenia cały worktree względem stałej bazy `review_base`, w tym staged, unstaged i nowe pliki. Jeśli są poprawki, `codex-flow-address-review` je wprowadza i review całości jest ponawiane — maksymalnie trzy rundy poprawek łącznie. Całość odbywa się w jednym wątku, bez jakichkolwiek subagentów, stagingu, commitów i pusha. Zakaz delegowania obejmuje także implementację, rozpoznanie, testy i walidację oraz wszystkie wywoływane skille. Milestone’y są realizowane kolejno przez głównego agenta.
-
-Checkpoint zawiera stałą bazę porównania, fazę, listę wyników milestone’ów, review, licznik rund, walidację, blokery i następny krok. Implementacja oczekująca na review ma wynik `implemented_pending_review` w checkpointie i status `in_progress` w roadmapie; `done` otrzymuje po pozytywnej ocenie. Blokady nie są pomijane: pętla realizuje pozostałe niezależne elementy i zatrzymuje się przed review całości, jeśli nie można dokończyć całej roadmapy. Checkpoint pozostaje w worktree i zachowuje zbiorczy stan aż do osobnej publikacji. Przy powrocie `$codex-flow-resume` porównuje dokumentację z Git, uwzględnia pracę rozpoczętą i nie polega wyłącznie na historii rozmowy.
+Rozmiary głównych dokumentów sprawdza `./scripts/check-context-size.sh`, również wywoływany przez `verify.sh`. Ostrzega po przekroczeniu któregokolwiek progu: `STATUS.md` — 150 linii lub 12 KiB, `ROADMAP.md` — 350 linii lub 30 KiB, `spec.md` — 500 linii lub 40 KiB. Brak opcjonalnego pliku jest pomijany; poniżej progów skrypt milczy. Ostrzeżenia nie blokują walidacji i nie zmieniają plików. Kontrola rozmiaru nie zastępuje kontroli produktu.
 
 ## Walidacja
 
-Uruchom `./scripts/verify.sh`. Skrypt sprawdza rozmiar dokumentów i dostępność `uv`, następnie uruchamia testy `unittest`, jeśli istnieje katalog `tests/`. Dodatkowe kontrole należy skonfigurować jawnie w docelowym projekcie.
+```sh
+./scripts/verify.sh
+```
 
-Sam kod wyjścia `0` nie potwierdza, że wykonano kontrole produktu: brak katalogu `tests/` powoduje pominięcie testów, a discovery może znaleźć zero przypadków. Agent powinien sprawdzić rzeczywisty wynik i zgłosić brak wykonanych kontroli zamiast uznać go za pozytywną walidację produktu.
+Świeży szablon kończy tę komendę kodem `2` i informacją o braku konfiguracji. To sygnał, że nie wykonano kontroli produktu. Po dostosowaniu skrypt powinien uruchamiać adekwatne testy, lintowanie, sprawdzanie typów, build lub smoke test i zwracać błąd, gdy kontrola się nie powiedzie. Dobierz narzędzia do projektu; nie dodawaj testów wyłącznie po to, aby uzyskać zielony wynik.
 
-W Milestone 0 dostosuj walidację do testów, smoke testu, lintowania lub builda właściwych dla projektu. Nie dodawaj pustych testów, żeby uzyskać zielony wynik.
+## Przykładowe prompty
 
-## Pamięć i limity kontekstu
+Poniższe przykłady możesz kopiować i dostosowywać. Nawiasy `[…]` zastąp swoim opisem. To propozycje rozmowy, a nie obowiązkowa sekwencja: dla małej zmiany wystarczy jedno konkretne polecenie.
 
-- `AGENTS.md`: trwałe reguły repozytorium.
-- `spec.md`: aktualne zachowanie i decyzje; szczegóły w `docs/spec/` i `docs/decisions/`.
-- `ROADMAP.md`: zakres, kryteria, walidacja, zależności i statusy `planned`, `in_progress`, `done`, `blocked`.
-- `STATUS.md`: krótki checkpoint i najbliższy krok; podczas `run-roadmap` zbiorczy stan pozostaje w worktree.
+### Nowy projekt: dopracowanie pomysłu
 
-`./scripts/check-context-size.sh` ostrzega po przekroczeniu 150 linii / 12 KB dla STATUS, 350 / 30 KB dla ROADMAP i 500 / 40 KB dla spec. Ostrzeżenie nie blokuje walidacji. Progi można zmienić zmiennymi `STATUS_MAX_LINES`, `STATUS_MAX_BYTES`, `ROADMAP_MAX_LINES`, `ROADMAP_MAX_BYTES`, `SPEC_MAX_LINES`, `SPEC_MAX_BYTES`.
+> Chcę stworzyć aplikację do […]. Najpierw pomóż mi dopracować pomysł. Ustalmy odbiorców, główne przepływy, zakres pierwszej wersji i kryteria sukcesu. Zadawaj pytania tam, gdzie potrzebujesz mojej decyzji. Na razie nie implementuj. Zapisz ustalenia w spec.md.
 
-Kompakcja następuje podczas planowania lub na jawne polecenie. Ukończone szczegóły roadmapy trafiają do `docs/archive/roadmap/`; aktualna specyfikacja pozostaje poza archiwum. Resume czyta tylko kontekst potrzebny do następnej decyzji.
+Jeśli wolisz zacząć od osobnego PRD, użyj zamiast tego:
 
-## Zasady commitów i publikacji
+> Chcę stworzyć […]. Przygotujmy wspólnie PRD w prd.md. Pomóż mi określić problem, odbiorców, oczekiwane zachowanie produktu, zakres i kryteria akceptacji. Oddziel ustalenia od założeń i otwartych pytań. Na razie nie implementuj; plan techniczny zostawmy na później.
 
-`codex-flow-run-roadmap` nie wykonuje stagingu, commitów ani pusha na żadnym etapie. Zakończenie roadmapy i review pozostawia zmiany w worktree. Commit i push wymagają osobnego polecenia publikacji.
+PRD jest opcjonalny. Przydaje się, gdy pomysł wymaga rozmowy o produkcie przed wyborem rozwiązania technicznego.
 
-`$codex-flow-publish`: „przygotuj” synchronizuje dokumentację bez stagingu i commita, „commit” tworzy commit bez pusha, „push” lub „opublikuj” wykonuje push i potrzebny commit po walidacji. Jeśli korzystasz z `github:yeet`, uruchom go po przygotowaniu przez publish. Żaden workflow nie włącza do commita zmian spoza uzgodnionego zakresu.
+### Plan realizacji
+
+> Na podstawie ustalonych wymagań i istniejącego PRD, jeśli go mamy, zaproponuj architekturę i plan realizacji. Zapisz aktualne wymagania oraz istotne decyzje w spec.md, a plan w ROADMAP.md. Podziel pracę na weryfikowalne rezultaty i wskaż zależności. Nie kopiuj całego PRD. Na razie nie implementuj.
+
+### Implementacja
+
+> Zrealizuj uzgodniony zakres z ROADMAP.md. Skonfiguruj środowisko i rzeczywistą walidację w scripts/verify.sh, zachowując kontrolę rozmiaru dokumentów. Sprawdź działanie, a w README projektu opisz uruchamianie i konfigurację. Zapisuj w STATUS.md informacje potrzebne do kontynuacji. Jeśli pojawi się istotna decyzja produktowa, wróć do mnie z pytaniem. Bez commita i pusha.
+
+Możesz też wskazać tylko jeden rezultat z planu, jeśli chcesz rozwijać projekt etapami.
+
+### Nowa funkcjonalność
+
+> Dodaj możliwość […]. Najpierw sprawdź, jak pasuje do obecnej aplikacji. Jeśli brakuje istotnych wymagań, doprecyzuj je ze mną przed implementacją. Zaktualizuj wymagania i plan w potrzebnym zakresie, następnie zaimplementuj i zweryfikuj zmianę. Bez commita i pusha.
+
+Dla większej lub niejasnej funkcji możesz najpierw poprosić o osobny PRD, tak jak przy nowym projekcie.
+
+### Mała zmiana lub naprawa błędu
+
+> Przy […] występuje […], a oczekuję […]. Sprawdź przyczynę, wprowadź poprawkę i zweryfikuj zachowanie. Dodaj test regresyjny, jeśli chroni ten błąd i nie jest już pokryty. Bez commita i pusha.
+
+### Powrót do projektu
+
+> Sprawdź aktualny stan projektu i niedokończoną pracę. Porównaj dokumentację z kodem oraz zmianami w Git i kontynuuj najbliższy uzgodniony krok. Jeśli nie da się ustalić zakresu, przedstaw, jakiej decyzji potrzebujesz.
+
+Jeśli chcesz tylko poznać stan, zakończ polecenie słowami: „Podaj krótkie podsumowanie i następny krok, bez zmieniania plików”.
+
+### Przegląd zmian
+
+> Przejrzyj bieżące zmiany pod kątem błędów, regresji i zgodności z wymaganiami. Podaj konkretne problemy, ich skutki i miejsca w kodzie. Na razie nie zmieniaj plików.
+
+### Commit i push
+
+> Sprawdź diff i wynik walidacji. Zrób commit obejmujący wyłącznie uzgodnione zmiany. Nie wykonuj pusha.
+
+Gdy chcesz wysłać gotowy commit:
+
+> Wypchnij bieżący branch do origin.
+
+## Zasady współpracy
+
+Plan i kryteria ukończenia są przydatne przy większych zmianach. Sposób podziału pracy, moment przeglądu kodu i zakres kontroli dobieraj do ryzyka oraz zależności. Szablon nie narzuca ról agentów, liczby rund poprawek ani osobnego workflow publikacji.
+
+Commit i push wymagają jawnego polecenia użytkownika. Zakończenie implementacji samo w sobie ich nie autoryzuje.

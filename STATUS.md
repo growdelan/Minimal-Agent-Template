@@ -1,27 +1,11 @@
-# Aktualny stan projektu
+# Stan pracy
 
-Ten plik jest krótką pamięcią operacyjną między sesjami. Zapisuj tylko informacje potrzebne do bezpiecznej kontynuacji pracy.
+<!-- Opcjonalna pamięć między sesjami. Zachowuj aktualne fakty, bez dziennika i kopii roadmapy. -->
 
-## Aktualny zakres
+## Niedokończona praca i następny krok
 
-- Milestone / zadanie:
-- Status:
-- Poza zakresem:
+## Blokery
 
-## Co zrobiono
+## Ostatnia istotna walidacja
 
-## Co jest następne
-
-## Ostatnia walidacja
-
-| Data | Zakres | Komenda / sposób | Wynik | Uwagi |
-|---|---|---|---|---|
-
-## Blokery i ryzyka
-
-## Handoff
-
-- Najkrótsze streszczenie:
-- Decyzje, których nie wolno zgubić:
-- Pliki do przeczytania jako pierwsze:
-- Następny bezpieczny krok:
+<!-- Zakres, komenda, wynik oraz istotne pominięcia. -->
