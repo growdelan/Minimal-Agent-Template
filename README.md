@@ -74,10 +74,6 @@ Dla większej lub niejasnej funkcji możesz najpierw poprosić o osobny PRD, tak
 
 Jeśli chcesz tylko poznać stan, zakończ polecenie słowami: „Podaj krótkie podsumowanie i następny krok, bez zmieniania plików”.
 
-### Przegląd zmian
-
-> Przejrzyj bieżące zmiany pod kątem błędów, regresji i zgodności z wymaganiami. Podaj konkretne problemy, ich skutki i miejsca w kodzie. Na razie nie zmieniaj plików.
-
 ### Commit i push
 
 > Sprawdź diff i wynik walidacji. Zrób commit obejmujący wyłącznie uzgodnione zmiany. Nie wykonuj pusha.
@@ -85,6 +81,30 @@ Jeśli chcesz tylko poznać stan, zakończ polecenie słowami: „Podaj krótkie
 Gdy chcesz wysłać gotowy commit:
 
 > Wypchnij bieżący branch do origin.
+
+## Review kodu
+
+Review nie wymaga skilla. Szablon nie uruchamia go automatycznie ani nie narzuca pętli poprawek; możesz zlecić przegląd osobno lub uwzględnić go w zadaniu implementacyjnym.
+
+- **Walidacja** to wykonanie skonfigurowanych kontroli, np. testów, typechecka i builda przez `scripts/verify.sh`.
+- **Review** to ocena rozwiązania: błędów, regresji, zgodności z wymaganiami i zbędnej złożoności. Zielone testy nie zastępują takiej oceny.
+- **Samoocena** to review wykonane przez autora zmian. Niezależny przegląd można zlecić osobnemu agentowi, jeśli środowisko obsługuje subagentów, albo drugiej osobie.
+
+### Review bez zmieniania kodu
+
+> Przejrzyj bieżący diff pod kątem błędów, regresji i zgodności z wymaganiami. Uwzględnij nowe pliki należące do zadania. Podaj konkretne problemy, ich skutki i miejsca w kodzie. Na razie nie zmieniaj plików.
+
+### Implementacja z samooceną i poprawkami
+
+> Zaimplementuj […], wykonaj adekwatną walidację, następnie przejrzyj cały diff zadania i napraw zasadne problemy. Po poprawkach ponownie sprawdź zmienione zachowanie. Podaj wynik oraz nierozwiązane problemy. Bez commita i pusha.
+
+### Niezależne review
+
+> Zleć niezależnemu subagentowi review całego diffu zadania, włącznie z nowymi plikami. Przekaż mu zakres i kryteria akceptacji; niech oceni kod bez jego modyfikowania. Zweryfikuj jego uwagi, napraw zasadne problemy i wykonaj adekwatną walidację. Bez commita i pusha.
+
+Dla zmian już zacommitowanych wskaż branch, PR lub bazę porównania, aby przegląd obejmował właściwy zakres. Jeśli subagenci nie są dostępni, poproś o przegląd w osobnej rozmowie z dostępem do repozytorium, przekazując zakres i wymagania.
+
+Raport może pozostać w rozmowie. W `STATUS.md` zachowaj istotny wynik, oceniony zakres i nierozwiązane problemy, jeśli są potrzebne do kontynuacji. Osobny plik raportu twórz, gdy potrzebujesz trwałego zapisu. Po kolejnych zmianach wcześniejsze review nie potwierdza automatycznie poprawności nowej wersji.
 
 ## Zasady współpracy
 
