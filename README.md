@@ -7,7 +7,7 @@ Krótki zestaw zasad, miejsce na wymagania i pamięć pracy oraz jedna komenda w
 To README jest instrukcją korzystania z szablonu. Docelowy projekt ma własny README opisujący aplikację, jej uruchamianie i konfigurację.
 
 1. Utwórz osobne repozytorium projektu lub otwórz istniejące.
-2. Przenieś `AGENTS.md`, `spec.md` oraz katalog `scripts/`. Dodaj `STATUS.md` dla pracy obejmującej wiele sesji i `ROADMAP.md`, jeśli potrzebujesz większego planu. Reguły z `.gitignore` połącz z regułami projektu.
+2. Przenieś `spec.md` oraz katalog `scripts/`. Dodaj `STATUS.md` dla pracy obejmującej wiele sesji i `ROADMAP.md`, jeśli potrzebujesz większego planu. Reguły z `.gitignore` połącz z regułami projektu.
 3. Zachowaj istniejące wymagania, dokumentację i komendy projektu. Jeśli ma już odpowiedniki tych plików, połącz potrzebne ustalenia zamiast tworzyć drugie źródło tych samych informacji. Tego README nie musisz kopiować.
 4. Otwórz repozytorium projektu w agencie i opisz zamierzony rezultat. Agent może dopasować konwencje oraz skonfigurować `scripts/verify.sh` podczas przygotowania środowiska.
 
@@ -15,7 +15,6 @@ Opisz agentowi oczekiwany rezultat i istotne ograniczenia zwykłym językiem. Za
 
 ## Dokumenty
 
-- `AGENTS.md` — lokalne konwencje i preferencje, których agent nie powinien zgadywać.
 - `spec.md` — aktualne wymagania oraz istotne decyzje i ich uzasadnienia.
 - `STATUS.md` — opcjonalna pamięć między sesjami: niedokończona praca, blokery, ostatnia walidacja i następny krok.
 - `ROADMAP.md` — opcjonalny plan większego zakresu, z rezultatami i warunkami ukończenia.
